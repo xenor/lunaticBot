@@ -16,6 +16,11 @@ class /*MODULE_ID*/
 			$this->core->connection->send("PRIVMSG #crapcode-dev :unloading module ".$command[1]);
 			$this->core->modules->unloadModule($command[1]);
 		}
+		elseif($command[0] == "load")
+		{
+			$this->core->connection->send("PRIVMSG #crapcode-dev :loading module ".$command[1]);
+			$this->core->modules->loadModule($command[1]);
+		}
 	}
 }
 ?>

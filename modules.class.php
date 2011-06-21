@@ -52,6 +52,7 @@ class modules
 			}
 			echo "DELETED $events EVENTS!\n";
 			unset($this->module_list[$module_id]);
+			print_r($this->core);
 		}
 		else
 		{
@@ -88,7 +89,7 @@ class modules
 	{
 		echo "REGISTER: $event_name\n";
 		$this->event_list[] = (object) array (
-			"ref" => &$ref,
+			//"ref" => &$ref,
 			"event_name" => $event_name,
 			"module_id" => $ref->module_id,
 		);
@@ -101,7 +102,10 @@ class modules
 		{
 			if($event->event_name == $event_name)
 			{
-				$this->module_list[$event->module_id]->ref->$event_name($event_data);
+				if(isset($this->module_list[$event->module_id]))
+				{
+					$this->module_list[$event->module_id]->ref->$event_name($event_data);
+				}
 			}
 		}
 	}
