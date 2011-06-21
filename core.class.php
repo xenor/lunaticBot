@@ -27,38 +27,39 @@ class core
 			$ident = substr($cmd[0],strpos($cmd[0],"!")+1,strpos($cmd[0],"@")-strlen($nick)-2);
 			$host = substr($cmd[0],strpos($cmd[0],"@")+1);
 			$msg = substr($str,strlen($cmd[0].$cmd[1].$cmd[2])+4);
-			
+			/*
 			echo "Nick: $nick\n";
 			echo "Ident: $ident\n";
 			echo "Host: $host\n";
 			echo "Message: $msg\n";
-			
+			*/
 			$event_data = (object) array(
 				"nick" => $nick,
 				"ident" => $ident,
 				"host" => $host,
-				"message" => $msg,
 				"target" => $cmd[2],
+				"message" => $msg,
 			);
 			
 			$this->modules->callEvent("PRIVMSG",$event_data);
-			
 		}
-		elseif($cmd[1] == "INVITE")
+
+
+		$event_data = (object) array(
+			"string" => $str,
+			"commands" => $cmd,
+		);
+		
+		$this->modules->callEvent("GENERIC",$event_data);
+		
+		if(intval($cmd[1]) != 0)
 		{
-			$channel = substr($cmd[3],1);
-			$this->join($channel);
-		}
-		elseif($cmd[1] == "376")
-		{
-			foreach($this->config->channels as $channel)
-			{
-				$this->join($channel);
-			}
-		}
-		elseif($cmd[0] == "PING")
-		{
-			$this->connection->send("PONG ".$cmd[1]);
+			$event_data = (object) array(
+				"numeric" => intval($cmd[1]),
+				"string" => $str,
+				"commands" => $cmd,
+			);
+			$this->modules->callEvent("NUMERIC",$event_data);
 		}
 	}
 	

@@ -10,9 +10,12 @@ require_once "modules.class.php";
 
 $core = new core($config);
 $core->modules = new modules($core);
-$core->modules->loadModule("modules/mod_test.php");
+$core->modules->loadModule("mod_pong");
+$core->modules->loadModule("mod_autojoin");
+$core->modules->loadModule("mod_admin");
+$core->modules->loadModule("mod_test");
 
-while(true)
+while(!feof($core->connection->conn))
 {
 	$str = $core->recv();
 	$str_array = explode("\r\n", $str);
