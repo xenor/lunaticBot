@@ -26,13 +26,22 @@ class core
 			$nick = substr($cmd[0],1,strpos($cmd[0],"!")-1);
 			$ident = substr($cmd[0],strpos($cmd[0],"!")+1,strpos($cmd[0],"@")-strlen($nick)-2);
 			$host = substr($cmd[0],strpos($cmd[0],"@")+1);
-			
 			$msg = substr($str,strlen($cmd[0].$cmd[1].$cmd[2])+4);
 			
 			echo "Nick: $nick\n";
 			echo "Ident: $ident\n";
 			echo "Host: $host\n";
 			echo "Message: $msg\n";
+			
+			$event_data = (object) array(
+				"nick" => $nick,
+				"ident" => $ident,
+				"host" => $host,
+				"message" => $msg,
+				"target" => $cmd[2],
+			);
+			
+			$this->modules->callEvent("PRIVMSG",$event_data);
 			
 		}
 		elseif($cmd[1] == "INVITE")

@@ -1,6 +1,6 @@
 <?php
 $config = (object) array(
-	"host" => "chat.freenode.net",
+	"host" => "niven.freenode.net",
 	"port" => 6667,
 	"nick" => "TheLunaticBot",
 	"password" => "",
