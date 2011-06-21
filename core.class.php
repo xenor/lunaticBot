@@ -10,12 +10,11 @@ class core
 		
 		$connection->send("USER ".$config->user." * * :".$config->realname);
 		$connection->send("NICK ".$config->nick);
-
 	}
 	
-	public function wait()
+	public function recv()
 	{
-		$str = $this->connection->recv();
+		do $str = $this->connection->recv(); while($str == "");
 		return $str;
 	}
 	
