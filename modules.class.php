@@ -36,7 +36,7 @@ class modules
 			$content = file_get_contents($module_name);
 			$mod_hash = $this->generateModHash($module_name);
 			echo "$mod_hash)\n";
-			$content = strtr($content,array('<?php' => '','?>' => '','/*RANDOM*/' => $mod_hash));
+			$content = strtr($content,array('<?php' => '','?>' => '','/*MODULE_ID*/' => $mod_hash));
 			eval($content);
 			$mod = new $mod_hash($this->core);
 			$this->module_list[$mod_hash] = &$mod;
