@@ -50,7 +50,7 @@ class core
 		}
 		elseif($cmd[0] == "PING")
 		{
-			$this->connection->send($cmd[1]);
+			$this->connection->send("PONG ".$cmd[1]);
 		}
 	}
 	

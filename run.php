@@ -8,13 +8,15 @@ require_once "connection.class.php";
 require_once "core.class.php";
 
 $core = new core($config);
-
-while($str = $core->wait())
-{
-	$str_array = explode("\r\n",$str);
-	foreach($str_array as $line)
-	{
-		$core->handle($line);
-	}
-}
+while (1)
+    {
+        while($str = $core->wait())
+        {
+            $str_array = explode("\r\n", $str);
+            foreach($str_array as $line)
+            {
+                $core->handle($line);
+            }
+        }
+    }
 ?>
