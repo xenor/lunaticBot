@@ -1,6 +1,9 @@
 <?php
 class core
 {
+
+	public $online = false;
+
 	public function __construct(&$config)
 	{
 		$connection = new connection($config);
@@ -66,6 +69,11 @@ class core
 	public function join($channel)
 	{
 		$this->connection->send("JOIN $channel");
+	}
+	
+	public function privmsg($target,$msg)
+	{
+		$this->connection->send("PRIVMSG $target :$msg");
 	}
 }
 ?>

@@ -16,6 +16,7 @@ class /*MODULE_ID*/
 			foreach($this->core->config->channels as $channel)
 			{
 				$this->core->join($channel);
+				$this->core->online = true;
 			}
 		}
 		elseif($cmd[1] == "INVITE")

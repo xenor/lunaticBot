@@ -52,11 +52,18 @@ class modules
 			}
 			echo "DELETED $events EVENTS!\n";
 			unset($this->module_list[$module_id]);
-			print_r($this->core);
+			if($this->core->online == true)
+			{
+				$this->core->privmsg($this->core->config->owner,"deleted $events events! unloaded module $module_name!");
+			}
 		}
 		else
 		{
 			echo "MODULE NOT LOADED\n";
+			if($this->core->online == true)
+			{
+				$this->core->privmsg($this->core->config->owner,"module $module_name not loaded!");
+			}
 		}
 	}
 	
@@ -78,16 +85,28 @@ class modules
 				"module_id" => $mod_hash,
 				"ref" => &$mod,
 			);
+			
+			if($this->core->online == true)
+			{
+				$this->core->privmsg($this->core->config->owner,"loaded module $module_name ($mod_hash)");
+			}
 		}
 		else
 		{
 			echo "MODULE-FILE NOT FOUND!)\n";
+			if($this->core->online == true)
+			{
+				$this->core->privmsg($this->core->config->owner,"wanted to load $module_name, but can't find the file :(");
+			}
 		}
 	}
 	
 	public function registerEvent($event_name,&$ref)
 	{
-		echo "REGISTER: $event_name\n";
+		if($this->core->online == true)
+		{
+			$this->core->privmsg($this->core->config->owner,"register event $event_name");
+		}
 		$this->event_list[] = (object) array (
 			//"ref" => &$ref,
 			"event_name" => $event_name,
@@ -97,7 +116,7 @@ class modules
 	
 	public function callEvent($event_name,$event_data=array())
 	{
-		echo "CALL: $event_name\n";
+		//$this->core->privmsg($this->core->config->owner,"call event $event_name");
 		foreach($this->event_list as $event)
 		{
 			if($event->event_name == $event_name)
