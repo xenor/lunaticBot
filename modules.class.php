@@ -54,7 +54,7 @@ class modules
 			unset($this->module_list[$module_id]);
 			if($this->core->online == true)
 			{
-				$this->core->privmsg($this->core->config->owner,"deleted $events events! unloaded module $module_name!");
+				$this->core->privmsg($this->core->config->owner,"admin: deleted $events events! unloaded module $module_name!");
 			}
 		}
 		else
@@ -62,41 +62,60 @@ class modules
 			echo "MODULE NOT LOADED\n";
 			if($this->core->online == true)
 			{
-				$this->core->privmsg($this->core->config->owner,"module $module_name not loaded!");
+				$this->core->privmsg($this->core->config->owner,"admin: module $module_name not loaded!");
 			}
 		}
 	}
 	
 	public function loadModule($module_name)
 	{
-		echo "LOAD_MODULE: $module_name (";
-		if(file_exists("modules/".$module_name.".php"))
-		{			
-			$mod_hash = $this->generateModHash($module_name);
-			echo "$mod_hash)\n";
-			
-			$content = file_get_contents("modules/".$module_name.".php");
-			$content = strtr($content,array('<?php' => '','?>' => '','/*MODULE_ID*/' => $mod_hash));
-			eval($content);
-			
-			$mod = new $mod_hash($this->core);
-			$this->module_list[$mod_hash] = (object) array(
-				"module_name" => $module_name,
-				"module_id" => $mod_hash,
-				"ref" => &$mod,
-			);
-			
-			if($this->core->online == true)
+		$module_loaded = false;
+		foreach($this->module_list as $module)
+		{
+			if($module_name == $module->module_name)
 			{
-				$this->core->privmsg($this->core->config->owner,"loaded module $module_name ($mod_hash)");
+				$module_loaded = true;
+			}
+		}
+		if($module_loaded == false)
+		{
+			echo "LOAD_MODULE: $module_name (";
+			if(file_exists("modules/".$module_name.".php"))
+			{			
+				$mod_hash = $this->generateModHash($module_name);
+				echo "$mod_hash)\n";
+				
+				$content = file_get_contents("modules/".$module_name.".php");
+				$content = strtr($content,array('<?php' => '','?>' => '','/*MODULE_ID*/' => $mod_hash));
+				eval($content);
+				
+				$mod = new $mod_hash($this->core);
+				$this->module_list[$mod_hash] = (object) array(
+					"module_name" => $module_name,
+					"module_id" => $mod_hash,
+					"ref" => &$mod,
+				);
+				
+				if($this->core->online == true)
+				{
+					$this->core->privmsg($this->core->config->owner,"admin: loaded module $module_name ($mod_hash)");
+				}
+			}
+			else
+			{
+				echo "MODULE-FILE NOT FOUND!)\n";
+				if($this->core->online == true)
+				{
+					$this->core->privmsg($this->core->config->owner,"admin: wanted to load ".$module_name.", but can't find the file :(");
+				}
 			}
 		}
 		else
 		{
-			echo "MODULE-FILE NOT FOUND!)\n";
+			echo "MODULE ALREADY LOADED!)\n";
 			if($this->core->online == true)
 			{
-				$this->core->privmsg($this->core->config->owner,"wanted to load $module_name, but can't find the file :(");
+				$this->core->privmsg($this->core->config->owner,"admin: already loaded module $module_name");
 			}
 		}
 	}
@@ -105,7 +124,7 @@ class modules
 	{
 		if($this->core->online == true)
 		{
-			$this->core->privmsg($this->core->config->owner,"register event $event_name");
+			$this->core->privmsg($this->core->config->owner,"admin: register event $event_name");
 		}
 		$this->event_list[] = (object) array (
 			//"ref" => &$ref,
@@ -116,7 +135,7 @@ class modules
 	
 	public function callEvent($event_name,$event_data=array())
 	{
-		//$this->core->privmsg($this->core->config->owner,"call event $event_name");
+		//$this->core->privmsg($this->core->config->owner,"admin: call event $event_name");
 		foreach($this->event_list as $event)
 		{
 			if($event->event_name == $event_name)

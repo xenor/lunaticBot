@@ -7,7 +7,7 @@ class /*MODULE_ID*/
 		$this->core = &$core;
 		$this->module_id = "/*MODULE_ID*/";
 		$this->core->modules->registerEvent("PRIVMSG",$this);
-		$this->core->connection->send("PRIVMSG #crapcode-dev :test :)");
+		$this->core->connection->send("PRIVMSG #crapcode-dev :Danke ePirat! <3 :)");
 	}
 	public function PRIVMSG($event_data)
 	{

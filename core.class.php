@@ -66,6 +66,15 @@ class core
 		}
 	}
 	
+	public function match_host($original,$match_this)
+	{
+		$pattern = "/".str_replace($match_this,"*","[.+]")."/";
+		echo "matching pattern $pattern to $original\n";
+		$match = array();
+		var_dump(preg_match_all($pattern,$original,$match));
+		print_r($match);
+	}
+	
 	public function join($channel)
 	{
 		$this->connection->send("JOIN $channel");

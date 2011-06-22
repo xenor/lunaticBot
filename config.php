@@ -9,6 +9,7 @@ $config = (object) array(
 	"channels" => array(
 		"#crapcode-dev"
 	),
-	"owner" => "#crapcode-dev",
+	"owner" => "xenor",
+	"owner_host" => "*",
 );
 ?>
