@@ -12,7 +12,7 @@ class /*MODULE_ID*/
 	{
 		if($event_data->commands[0] == "PING")
 		{
-			$this->connection->send("PONG ".$event_data->commands[1]);
+			$this->core->connection->send("PONG ".$event_data->commands[1]);
 		}
 	}
 }
