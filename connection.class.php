@@ -10,7 +10,7 @@ class connection
 	
 	public function send($str)
 	{
-		if(!feof($this->conn))
+		if(!($this->conn == false || feof($this->conn)))
 		{
 			echo "[>>>]: ".$str."\r\n";
 			fputs($this->conn,trim($str)."\r\n");
@@ -23,7 +23,7 @@ class connection
 	
 	public function recv()
 	{
-		if(feof($this->conn))
+		if($this->conn == false || feof($this->conn))
 		{
 			die("Not connected!");
 		}
