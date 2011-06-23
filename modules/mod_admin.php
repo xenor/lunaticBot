@@ -35,6 +35,14 @@ class /*MODULE_ID*/
 				$this->core->config = &$config;
 				$this->core->privmsg($this->core->config->owner,"Successfully rehashed configuration file!");
 			}
+			elseif($cmd[0] == "join")
+			{
+				$this->core->join($cmd[1]);
+			}
+			elseif($cmd[0] == "part")
+			{
+				$this->core->part($cmd[1]);
+			}
 		}
 	}
 }

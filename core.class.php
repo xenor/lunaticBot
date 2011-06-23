@@ -68,17 +68,23 @@ class core
 	
 	public function match_host($original,$match_this)
 	{
-		$pattern = "/".str_replace($match_this,"*","[.+]")."/";
+		/*$pattern = "/".str_replace($match_this,"*","(.*)")."/i";
 		echo "matching pattern $pattern to $original\n";
 		$match = array();
-		var_dump(preg_match_all($pattern,$original,$match));
-		print_r($match);
+		$matches = preg_match($pattern,$original,$match);
+		if($matches >= 1) return true; else return false;*/return true;
 	}
 	
 	public function join($channel)
 	{
 		$this->connection->send("JOIN $channel");
 	}
+	
+	public function part($channel)
+	{
+		$this->connection->send("PART $channel");
+	}
+	
 	
 	public function privmsg($target,$msg)
 	{
