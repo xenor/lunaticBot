@@ -51,6 +51,15 @@ class /*MODULE_ID*/
 				}
 				$this->last = $rand;
 			}
+			elseif(
+			$msg == "der ist doof, ne?" ||
+			$msg == "der ist doof ne?" ||
+			$msg == "der ist doof, ne" ||
+			$msg == "der ist doof ne"
+			)
+			{
+				$this->core->privmsg($event_data->target,"ja, find ich auch ._.\"");
+			}
 			elseif(substr($msg,0,strlen("soll ich")) == "soll ich")
 			{
 				$sep = strpos($msg,"oder");

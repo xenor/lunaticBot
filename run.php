@@ -14,6 +14,7 @@ $core->modules->loadModule("mod_pong");
 $core->modules->loadModule("mod_autojoin");
 $core->modules->loadModule("mod_admin");
 $core->modules->loadModule("mod_test");
+$core->modules->loadModule("mod_speak");
 
 while(!feof($core->connection->conn))
 {
