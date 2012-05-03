@@ -6,10 +6,9 @@ class /*MODULE_ID*/
 	{
 		$this->core = &$core;
 		$this->module_id = "/*MODULE_ID*/";
-		$this->core->modules->registerEvent("PRIVMSG",$this);
-		$this->core->privmsg("#crapcode-dev", "Danke ePirat! <3 :)");
+		$this->core->modules->registerEvent("GENERIC",$this);
 	}
-	public function PRIVMSG($event_data)
+	public function GENERIC($event_data)
 	{
 		print_r($event_data);
 	}

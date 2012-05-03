@@ -1,7 +1,7 @@
 <?php
 class core
 {
-
+	private $query = array();
 	public $online = false;
 
 	public function __construct(&$config)
@@ -14,7 +14,19 @@ class core
 		$connection->send("USER ".$config->user." * * :".$config->realname);
 		$connection->send("NICK ".$config->nick);
 	}
-	
+
+	public function quee($add=false)
+	{
+		if ($add !== false){
+			$this->query[] = $add;
+			return;
+		} else {
+			foreach($this->query as $msg){
+				$this->connection->send($msg);
+			}
+		}
+	}
+
 	public function recv()
 	{
 		do $str = $this->connection->recv(); while($str == "");
@@ -84,11 +96,14 @@ class core
 	{
 		$this->connection->send("PART $channel");
 	}
-	
-	
+
 	public function privmsg($target,$msg)
 	{
-		$this->connection->send("PRIVMSG $target :$msg");
+		if ($this->online !== false){
+			$this->connection->send("PRIVMSG $target :$msg");
+		} else {
+			$this->quee("PRIVMSG $target :$msg");
+		}
 	}
 }
 ?>

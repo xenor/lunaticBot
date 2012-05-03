@@ -17,6 +17,7 @@ class /*MODULE_ID*/
 			{
 				$this->core->join($channel);
 				$this->core->online = true;
+				$this->core->quee();
 			}
 		}
 		elseif($cmd[1] == "INVITE")
