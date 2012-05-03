@@ -10,7 +10,7 @@ class /*MODULE_ID*/
 	}
 	public function GENERIC($event_data)
 	{
-		print_r($event_data);
+		if($event_data->commands[1] == 433) print_r($event_data);
 	}
 }
 ?>
