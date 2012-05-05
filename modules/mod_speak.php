@@ -63,20 +63,10 @@ class /*MODULE_ID*/
 		{
 			$this->core->privmsg($event_data->target,$event_data->nick.", WAS IST LOS?! :O");
 		}
-		elseif(substr($event_data->message,0,strlen($this->core->config->nick)) == $this->core->config->nick)
+		elseif(preg_match("/^\s*".$this->core->config->nick."(?:[\,\:]\s|\s)(.*)/i", $event_data->message, $msg))
 		{
-			$msg = substr($event_data->message,strlen($this->core->config->nick) + 2);
-			if(
-				$msg == "ich hab dich lieb" ||
-				$msg == "ich hab dich lieb <3" ||
-				$msg == "ich hab dich lieb :)" ||
-				$msg == "ich liebe dich" ||
-				$msg == "ich liebe dich <3" ||
-				$msg == "ich liebe dich :)" ||
-				$msg == "ich mag dich sehr" ||
-				$msg == "ich mag dich sehr <3" ||
-				$msg == "ich mag dich sehr :)"
-			)
+			$msg = trim($msg[1]);
+			if(preg_match("/^(?:ich\s+hab\s+dich\s+lieb|ich\s+liebe\s+dich(?:(?:\s+so)*\s+sehr)*|ich\s+mag\s+dich(?:(?:\s+so)*\s+sehr)*)\s*(?:\<3|\:\)|\!|\.|…|\s)*$/i", $msg))
 			{
 				$try = 0;
 				do
@@ -99,12 +89,7 @@ class /*MODULE_ID*/
 				}
 				$this->last = $rand;
 			}
-			elseif(
-			$msg == "der ist doof, ne?" ||
-			$msg == "der ist doof ne?" ||
-			$msg == "der ist doof, ne" ||
-			$msg == "der ist doof ne"
-			)
+			elseif(preg_match("/^der\s+ist\s+(?:doof|blöd|fies|gemein|frech|nervig|böse)(?:,\s*|\s+)(?:ne|oder|wa|was|nicht wahr)[\s\?]*$/i", $msg))
 			{
 				$this->core->privmsg($event_data->target,"ja, find ich auch ._.\"");
 			}
