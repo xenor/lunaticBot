@@ -14,6 +14,7 @@ $core->modules->loadModule("mod_autojoin");
 $core->modules->loadModule("mod_admin");
 $core->modules->loadModule("mod_test");
 $core->modules->loadModule("mod_speak");
+$core->modules->loadModule("mod_altnicks");
 while(!feof($core->connection->conn))
 {
 	$str = $core->recv();

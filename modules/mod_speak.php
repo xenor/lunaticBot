@@ -15,9 +15,9 @@ class /*MODULE_ID*/
 			"RTL" => array("assitv"),
 			"RTL II" => array("assitv2", "rtl2", "rtl 2"),
 			"Sat.1" => array("sat1", "sat", "sateins", "sat eins"),
-			"ProSieben" => array("pro7", "pro 7", "pro sieben"),
-			"Das Erste" => array("ard", "erste", "1"),
-			"ZDF" => array("das zweite", "2")
+			"ProSieben" => array("pro7", "pro 7", "pro sieben", "prosieben"),
+			"Das Erste" => array("ard", "erste", "1", "daserste"),
+			"ZDF" => array("das zweite", "2", "daszweite", "zweite")
 		);
 		for ($i = 0; $i < count($stations); $i++){
 			$key = array_keys($stations);
@@ -31,11 +31,11 @@ class /*MODULE_ID*/
 		}
 		$tv = array();
 		switch ($now){
-			case "20:15":
+			//case "20:15":
 			case "20.15":
 				$feed = new SimpleXMLElement("http://www.tvspielfilm.de/tv-programm/rss/heute2015.xml", 0, true);
 				break;
-			case "22:00":
+			//case "22:00":
 			case "22.00":
 				$feed = new SimpleXMLElement("http://www.tvspielfilm.de/tv-programm/rss/heute2200.xml", 0, true);
 				break;
@@ -108,9 +108,12 @@ class /*MODULE_ID*/
 			elseif(preg_match ("/^was\s+läuft\s+(?:jetzt\s+||(?:um\s+)?([0-9]{2}[\:\.][0-9]{2})\s+)auf\s+([A-Za-z0-9_ß\.\-\s]+)[\?]{0,1}$/i", $msg, $matches))
 			{
 				$tv = $this->GetTv(trim($matches[2]), trim($matches[1]));
-				if ($tv !== false){
+				if ($tv !== false)
+				{
 					$this->core->privmsg($event_data->target, $event_data->nick.", auf $tv->channel läuft um $tv->time “".$tv->title."”");
-				} else {
+				}
+				else
+				{
 					$this->core->privmsg($event_data->target, $event_data->nick.", das weiß ich nicht :(");
 				}
 			}
