@@ -14,8 +14,7 @@ class /*MODULE_ID*/
 		{
 		
 			$ownerNick = $event_data->nick;
-			$adminLevel = $this->core->config[$ownerNick];
-		
+			$adminLevel = $this->core->config->owner[$ownerNick];
 			$cmd = explode(' ',$event_data->message, 2);
 			if($cmd[0] == "join")
 			{
@@ -28,6 +27,10 @@ class /*MODULE_ID*/
 			elseif($cmd[0] == "whoami")
 			{
 				$this->core->privmsg($ownerNick,"You're $ownerNick a level $adminLevel Admin");
+			}
+			elseif($cmd[0] == "quit")
+			{
+				$this->core->quit($cmd[1]);
 			}
 			elseif($adminLevel > 1)
 			{
@@ -53,10 +56,6 @@ class /*MODULE_ID*/
 					$this->core->config = &$config;
 					$this->core->privmsg($ownerNick,"Successfully rehashed configuration file!");
 				}
-			}
-			elseif($cmd[0] == "quit")
-			{
-				$this->core->quit($cmd[1]);
 			}
 		}
 	}
