@@ -29,7 +29,11 @@ class core
 
 	public function recv()
 	{
-		do $str = $this->connection->recv(); while($str == "");
+		do
+		{
+			$str = $this->connection->recv();
+		} while($str == "");
+		echo "[<<<]: ".$str."\r\n";
 		return $str;
 	}
 	
@@ -84,7 +88,8 @@ class core
 		echo "matching pattern $pattern to $original\n";
 		$match = array();
 		$matches = preg_match($pattern,$original,$match);
-		if($matches >= 1) return true; else return false;*/return true;
+		if($matches >= 1) return true; else return false;*/
+		return true;
 	}
 	
 	public function join($channel)

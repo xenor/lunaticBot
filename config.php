@@ -9,7 +9,13 @@ $config = (object) array(
 	"channels" => array(
 		"#crapcode-dev"
 	),
-	"owner" => "ePirat",
-	"owner_host" => "*",
+	"owner" => array(
+		"ePirat" = 1,
+		"xenor" => 2
+		),
+	"owner_host" => array(
+		"xenor" => "*",
+		"ePirat" => "*",
+	),
 );
 ?>

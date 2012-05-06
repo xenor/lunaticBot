@@ -33,7 +33,6 @@ class connection
 			{
 				die("Not connected!");
 			}
-			echo "[<<<]: ".$str."\r\n";
 			return $str;
 		}
 	}

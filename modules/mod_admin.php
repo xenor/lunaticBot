@@ -10,7 +10,7 @@ class /*MODULE_ID*/
 	}
 	public function PRIVMSG($event_data)
 	{
-		if(in_array($event_data->nick,$this->core->config->owner) /* && $this->core->match_host($event_data->host,$this->core->config->owner_host) */)
+		if(in_array($event_data->nick,$this->core->config->owner) && $this->core->match_host($event_data->host,$this->core->config->owner_host[$evet_data->nick]))
 		{
 		
 			$ownerNick = $event_data->nick;

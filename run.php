@@ -9,12 +9,13 @@ require_once "modules.class.php";
 
 $core = new core($config);
 $core->modules = new modules($core);
-$core->modules->loadModule("mod_pong");
-$core->modules->loadModule("mod_autojoin");
-$core->modules->loadModule("mod_admin");
-$core->modules->loadModule("mod_test");
-$core->modules->loadModule("mod_speak");
-$core->modules->loadModule("mod_altnicks");
+foreach(scandir("./modules") as $moduleFilename)
+{
+	if($moduleFilename != ".." && $moduleFilename != "." && substr($moduleFilename,0,4) == "mod_")
+	{
+		$core->modules->loadModule(substr($moduleFilename,0,strlen($moduleFilename)-4));
+	}
+}
 while(!feof($core->connection->conn))
 {
 	$str = $core->recv();
