@@ -29,7 +29,11 @@ class core
 
 	public function recv()
 	{
-		do $str = $this->connection->recv(); while($str == "");
+		do
+		{
+			$str = $this->connection->recv();
+		} while($str == "");
+		echo "[<<<]: ".$str."\r\n";
 		return $str;
 	}
 	

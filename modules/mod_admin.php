@@ -10,38 +10,49 @@ class /*MODULE_ID*/
 	}
 	public function PRIVMSG($event_data)
 	{
-		if($event_data->nick == $this->core->config->owner && $this->core->match_host($event_data->ident."@".$event_data->host,$this->core->config->owner_host))
+		if(isset($this->core->config->owner[$event_data->nick]) && $this->core->match_host($event_data->ident."@".$event_data->host,$this->core->config->owner_host[$event_data->nick]))
 		{
+		
+			$ownerNick = $event_data->nick;
+			$adminLevel = $this->core->config[$ownerNick];
+		
 			$cmd = explode(' ',$event_data->message, 2);
-			if($cmd[0] == "unload")
-			{
-				$this->core->privmsg($this->core->config->owner,"unloading module ".$cmd[1]);
-				$this->core->modules->unloadModule($cmd[1]);
-			}
-			elseif($cmd[0] == "load")
-			{
-				$this->core->privmsg($this->core->config->owner,"loading module ".$cmd[1]);
-				$this->core->modules->loadModule($cmd[1]);
-			}
-			elseif($cmd[0] == "reload")
-			{
-				$this->core->privmsg($this->core->config->owner,"reloading module ".$cmd[1]);
-				$this->core->modules->unloadModule($cmd[1]);
-				$this->core->modules->loadModule($cmd[1]);
-			}
-			elseif($cmd[0] == "rehash")
-			{
-				include("config.php");
-				$this->core->config = &$config;
-				$this->core->privmsg($this->core->config->owner,"Successfully rehashed configuration file!");
-			}
-			elseif($cmd[0] == "join")
+			if($cmd[0] == "join")
 			{
 				$this->core->join($cmd[1]);
 			}
 			elseif($cmd[0] == "part")
 			{
 				$this->core->part($cmd[1]);
+			}
+			elseif($cmd[0] == "whoami")
+			{
+				$this->core->privmsg($ownerNick,"You're $ownerNick a level $adminLevel Admin");
+			}
+			elseif($adminLevel > 1)
+			{
+				if($cmd[0] == "unload")
+				{
+					$this->core->privmsg($ownerNick,"unloading module ".$cmd[1]);
+					$this->core->modules->unloadModule($cmd[1]);
+				}
+				elseif($cmd[0] == "load")
+				{
+					$this->core->privmsg($ownerNick,"loading module ".$cmd[1]);
+					$this->core->modules->loadModule($cmd[1]);
+				}
+				elseif($cmd[0] == "reload")
+				{
+					$this->core->privmsg($ownerNick,"reloading module ".$cmd[1]);
+					$this->core->modules->unloadModule($cmd[1]);
+					$this->core->modules->loadModule($cmd[1]);
+				}
+				elseif($cmd[0] == "rehash")
+				{
+					include("config.php");
+					$this->core->config = &$config;
+					$this->core->privmsg($ownerNick,"Successfully rehashed configuration file!");
+				}
 			}
 			elseif($cmd[0] == "quit")
 			{
