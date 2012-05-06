@@ -10,7 +10,7 @@ $config = (object) array(
 		"#crapcode-dev"
 	),
 	"owner" => array(
-		"ePirat" = 1,
+		"ePirat" => 1,
 		"xenor" => 2
 		),
 	"owner_host" => array(
