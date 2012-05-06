@@ -80,18 +80,21 @@ class core
 	
 	public function match_host($original,$match_this)
 	{
-		/*$pattern = "/".str_replace($match_this,"*","(.*)")."/i";
+		$search = array(".", "!", "?","/","*"); // "*" must be at the end of the array!
+		$replace = array("\.", "\!", "\?", "\/","(.*)");
+		$pattern = "/^".str_replace($search,$replace,$match_this)."$/i";
 		echo "matching pattern $pattern to $original\n";
-		$match = array();
-		$matches = preg_match($pattern,$original,$match);
-		if($matches >= 1) return true; else return false;*/return true;
+		if (preg_match($pattern,$original,$match)){ return true; } else { return false; }
 	}
 	
 	public function join($channel)
 	{
 		$this->connection->send("JOIN $channel");
 	}
-	
+	public function quit($reason)
+	{
+		$this->connection->send("QUIT :$reason");
+	}
 	public function part($channel)
 	{
 		$this->connection->send("PART $channel");

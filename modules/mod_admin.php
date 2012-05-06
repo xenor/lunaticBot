@@ -10,9 +10,9 @@ class /*MODULE_ID*/
 	}
 	public function PRIVMSG($event_data)
 	{
-		if($event_data->nick == $this->core->config->owner && $this->core->match_host($event_data->host,$this->core->config->owner_host))
+		if($event_data->nick == $this->core->config->owner && $this->core->match_host($event_data->ident."@".$event_data->host,$this->core->config->owner_host))
 		{
-			$cmd = explode(' ',$event_data->message);
+			$cmd = explode(' ',$event_data->message, 2);
 			if($cmd[0] == "unload")
 			{
 				$this->core->privmsg($this->core->config->owner,"unloading module ".$cmd[1]);
@@ -42,6 +42,10 @@ class /*MODULE_ID*/
 			elseif($cmd[0] == "part")
 			{
 				$this->core->part($cmd[1]);
+			}
+			elseif($cmd[0] == "quit")
+			{
+				$this->core->quit($cmd[1]);
 			}
 		}
 	}

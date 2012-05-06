@@ -63,9 +63,9 @@ class /*MODULE_ID*/
 		{
 			$this->core->privmsg($event_data->target,$event_data->nick.", WAS IST LOS?! :O");
 		}
-		elseif(preg_match("/^\s*".$this->core->config->nick."(?:[\,\:]\s|\s)(.*)/i", $event_data->message, $msg))
+		elseif(substr($event_data->message,0,strlen($this->core->config->nick)) == $this->core->config->nick)
 		{
-			$msg = trim($msg[1]);
+			$msg = trim(substr($event_data->message, strlen($this->core->config->nick)+2));
 			if(preg_match("/^(?:ich\s+hab\s+dich\s+lieb|ich\s+liebe\s+dich(?:(?:\s+so)*\s+sehr)*|ich\s+mag\s+dich(?:(?:\s+so)*\s+sehr)*)\s*(?:\<3|\:\)|\!|\.|…|\s)*$/i", $msg))
 			{
 				$try = 0;
