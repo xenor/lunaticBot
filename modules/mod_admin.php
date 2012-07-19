@@ -10,13 +10,12 @@ class /*MODULE_ID*/
 	}
 	public function PRIVMSG($event_data)
 	{
-		if(isset($this->core->config->owner[$event_data->nick]) && $this->core->match_host($event_data->host,$this->core->config->owner_host[$evet_data->nick]))
+		if(isset($this->core->config->owner[$event_data->nick]) && $this->core->match_host($event_data->ident."@".$event_data->host,$this->core->config->owner_host[$event_data->nick]))
 		{
 		
 			$ownerNick = $event_data->nick;
-			$adminLevel = $this->core->config[$ownerNick];
-		
-			$cmd = explode(' ',$event_data->message);
+			$adminLevel = $this->core->config->owner[$ownerNick];
+			$cmd = explode(' ',$event_data->message, 2);
 			if($cmd[0] == "join")
 			{
 				$this->core->join($cmd[1]);
@@ -28,6 +27,10 @@ class /*MODULE_ID*/
 			elseif($cmd[0] == "whoami")
 			{
 				$this->core->privmsg($ownerNick,"You're $ownerNick a level $adminLevel Admin");
+			}
+			elseif($cmd[0] == "quit")
+			{
+				$this->core->quit($cmd[1]);
 			}
 			elseif($adminLevel > 1)
 			{
